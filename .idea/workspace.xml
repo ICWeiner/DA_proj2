@@ -6,9 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4ace7f10-41ce-4ce8-9afe-cc41331129b1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input/basic.txt" beforeDir="false" afterPath="$PROJECT_DIR$/input/basic.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Node.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/NodeQ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NodeQ.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Proj2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Proj2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,15 +33,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/rafaelmorgado/Desktop/Prog/DA/DA_Proj2_Diogo/DA_proj2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/username/2aulas/2sem/DA/DA_proj2&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Proj2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Proj2" />
@@ -64,7 +64,6 @@
       <option name="presentableId" value="Default" />
       <updated>1652721577947</updated>
       <workItem from="1652721578991" duration="11000" />
-      <workItem from="1653511967714" duration="3869000" />
     </task>
     <servers />
   </component>
