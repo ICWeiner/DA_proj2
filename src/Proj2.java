@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Proj2 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         try {
             File file = new File("input/basic.txt");
@@ -15,8 +15,8 @@ public class Proj2 {
                 g.addLink(in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt());
             }
 
-            //g.dijkstra(1);//encontrar caminho mais curto para cada no
-            g.maxCapacity(1);
+            g.dijkstra(1);//encontrar caminho mais curto para cada no
+            //g.maxCapacity(3);
 
         }catch (FileNotFoundException e){
             e.printStackTrace();

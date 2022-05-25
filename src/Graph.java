@@ -18,23 +18,17 @@ public class Graph {
 
     // Algoritmo de Dijkstra
     void dijkstra(int s) {
-        //Inicializar nos como nao visitados e com distancia infinita
         for (int i=1; i<=n; i++) {
-            nodes[i].capacity = Integer.MAX_VALUE;
-            nodes[i].visited  = false;
+            nodes[i].capacity = Integer.MIN_VALUE;
         }
-
         // Inicializar "fila" com no origem
-        nodes[s].capacity = 0;
+        nodes[s].capacity = Integer.MAX_VALUE;
         TreeSet<NodeQ> q = new TreeSet<>();
         q.add(new NodeQ(0, s)); // Criar um par (dist=0, no=s)
 
         // Ciclo principal do Dijkstra
         while (!q.isEmpty()) {
-            // Retirar no com menor distancia (o "primeiro" do set, que e uma BST)
-            NodeQ nq = q.pollFirst();
-            int  u = nq.node;
-            nodes[u].visited = true;
+            
             System.out.println(u + " [capacity=" + nodes[u].capacity + "]");
 
             // Relaxar arestas do no retirado
@@ -42,9 +36,9 @@ public class Graph {
                 int v = e.to;
                 int cost = e.capacity;
 
-                if (!nodes[v].visited && nodes[u].capacity + cost < nodes[v].capacity) {
+                if (nodes[u].capacity + cost < nodes[v].capacity) {
                     q.remove(new NodeQ(nodes[v].capacity, v)); // Apagar do set
-                    nodes[v].capacity = nodes[u].capacity + cost;
+                    nodes[v].capacity = cost;
                     q.add(new NodeQ(nodes[v].capacity, v));    // Inserir com nova (e menor) distancia
                 }
             }
