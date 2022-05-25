@@ -16,7 +16,6 @@ public class Proj2 {
             }
 
             g.dijkstra(1);//encontrar caminho mais curto para cada no
-            //g.maxCapacity(3);
 
         }catch (FileNotFoundException e){
             e.printStackTrace();
