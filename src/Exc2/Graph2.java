@@ -77,7 +77,10 @@ public class Graph2 {
           System.out.println("Impossible to travel as a group");
           break;
         }
-        Path(groupSize,i);
+        System.out.println("Fluxo para o grupo maximo: " + flow);
+        maxPath();
+        System.out.println("Fluxo para o grupo de " + groupSize + ":");
+        groupPath(groupSize);
         break;
       }
       
@@ -94,12 +97,21 @@ public class Graph2 {
       }
       i++;
     }
-    
-    //TODO quando o código chega aqui a matriz cap contem o grafo residual final só falta o código que percorra o caminho de tras para a frente
-    System.out.println("Fluxo maximo: " + flow);
   }
   
-  private void Path(int size, int length) {
+  private void maxPath() {                  // Exercício 2.3
+    int i=0;
+    for (List<Integer> path : paths) {
+      reverse(path);
+      System.out.print("Fluxo neste caminho é " + flux.get(i) + ": 1 -> ");
+      for (int a = 0; a < (path.size() - 1); a++)
+        System.out.print(path.get(a) + " -> ");
+      System.out.println(path.get(path.size() - 1));
+      i++;
+    }
+  }
+  
+  private void groupPath(int size) {      // Exercício 2.1
     int max = 0, maxInt = 0;  // max é o index da lista e maxInt é o valor nessa posição
     while(true){
       for(int i=0; i<flux.size() ;i++)
