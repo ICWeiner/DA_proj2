@@ -11,11 +11,13 @@ public class Proj2 {
             Scanner in = new Scanner(file);
             Graph g = new Graph(in.nextInt());
             int   e = in.nextInt();
-            for (int i=0; i<e; i++){
+            for (int i = 0; i < e; i++){
                 g.addLink(in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt());
             }
 
-            g.dijkstra(1);//encontrar caminho mais curto para cada no
+            //chamar esta funçoes faz o que é pedido no cenario 1
+            g.maxPath(1);//encontrar caminho mais curto para cada no
+            g.dijkstra(1);
 
         }catch (FileNotFoundException e){
             e.printStackTrace();
