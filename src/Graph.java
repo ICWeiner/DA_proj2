@@ -1,6 +1,8 @@
 import java.util.LinkedList;
-import java.util.Set;
+import java.util.List;
 import java.util.TreeSet;
+
+import static java.util.Collections.reverse;
 
 // Classe que representa um grafo
 public class Graph {
@@ -55,12 +57,16 @@ public class Graph {
             }
         }
         System.out.println("Caminho maximo encontrado, capacidade = "  + caps[caps.length - 1 ]);
-
-        for (int i = n; i > 1;){//imprimir caminho ,  TODO:esta por ordem contraria, arranjar mayhaps?
-            System.out.println(i);
+        
+        List<Integer> print = new LinkedList<>();
+        for (int i = n; i > 1;){//imprimir caminho
+            print.add(i);
             i = pai[i];
         }
+        reverse(print);
         System.out.println(1);
+        for (int a : print)
+            System.out.println(a);
     }
 
     void dijkstra(int s) {
@@ -98,12 +104,16 @@ public class Graph {
         }
 
         System.out.println("Caminho mais rapido encontrado, distancia = "  + nodes[n].distance);
-
-        for (int i = n; i > 1;){//imprimir caminho ,  TODO:esta por ordem contraria, arranjar mayhaps?
-            System.out.println(i);
+    
+        List<Integer> print = new LinkedList<>();
+        for (int i = n; i > 1;){//imprimir caminho
+            print.add(i);
             i = pai[i];
         }
+        reverse(print);
         System.out.println(1);
+        for (int a : print)
+            System.out.println(a);
     }
 
     /*public void bfs(Node v) {
