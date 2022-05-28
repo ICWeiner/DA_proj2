@@ -1,3 +1,7 @@
+package Exc1;
+
+import Exc1.Edge;
+
 import java.util.LinkedList;
 
 // Classe que representa um no

@@ -1,3 +1,5 @@
+package Exc1;
+
 class NodeQ implements Comparable<NodeQ> {
     public int cost;
     public int node;

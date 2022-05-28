@@ -1,7 +1,6 @@
-import java.util.LinkedList;
-import java.util.List;
-import java.util.TreeSet;
+package Exc1;
 
+import java.util.*;
 import static java.util.Collections.reverse;
 
 // Classe que representa um grafo
@@ -9,14 +8,14 @@ public class Graph {
     int n;          // Numero de nos do grafo
     Node[] nodes;   // Array para conter os nos
     
-    Graph(int n) {
+    public Graph(int n) {
         this.n = n;
         nodes = new Node[n+1];  // +1 se os nos comecam em 1 ao inves de 0
         for (int i=1; i<=n; i++)
             nodes[i] = new Node();
     }
     
-    void addLink(int a, int b, int c,int d) {
+    public void addLink(int a, int b, int c, int d) {
         nodes[a].adj.add(new Edge(b, c, d));
         //System.out.println(a + " " + b + " " + c + " " + d + " ");
     }
@@ -24,7 +23,7 @@ public class Graph {
 
     
     // Algoritmo de Dijkstra-ish for max flow path
-    void maxPath(int s) {//this whole thing is sussy, im still not 100% how it works
+    public void maxPath(int s) {//this whole thing is sussy, im still not 100% how it works
         //Inicializar nos como nao visitados e com distancia infinita
         for (int i=1; i<=n; i++) {
             nodes[i].visited  = false;
@@ -64,12 +63,13 @@ public class Graph {
             i = pai[i];
         }
         reverse(print);
-        System.out.println(1);
-        for (int a : print)
-            System.out.println(a);
+        System.out.print(1 + " -> ");
+        for (int a=0; a<(print.size()-1) ;a++)
+            System.out.print(print.get(a) + " -> ");
+        System.out.println(print.get(print.size()-1));
     }
 
-    void dijkstra(int s) {
+    public void dijkstra(int s) {
         //Inicializar nos como nao visitados e com distancia infinita
         for (int i = 1; i <= n; i++) {
             nodes[i].distance = Integer.MAX_VALUE;
@@ -111,9 +111,10 @@ public class Graph {
             i = pai[i];
         }
         reverse(print);
-        System.out.println(1);
-        for (int a : print)
-            System.out.println(a);
+        System.out.print(1 + " -> ");
+        for (int a=0; a<(print.size()-1) ;a++)
+            System.out.print(print.get(a) + " -> ");
+        System.out.println(print.get(print.size()-1));
     }
 
     /*public void bfs(Node v) {
@@ -127,7 +128,7 @@ public class Graph {
         while (q.size() > 0) {
             Node u = q.removeFirst();
             System.out.println(u + " [dist=" + u.distance + "]");
-            for (Edge w : u.adj)
+            for (Exc1.Edge w : u.adj)
                 if (!nodes[w].visited) {
                     q.add(w);
                     nodes[w].visited = true;
@@ -144,7 +145,7 @@ public class Graph {
             flow[0][n] = Integer.MAX_VALUE;
 
         for(int i = 1; i < nodes.length; i++){
-            for(Edge edge : nodes[i].adj){
+            for(Exc1.Edge edge : nodes[i].adj){
                 System.out.println(edge.capacity + " " + nodes[i].flow);
                 if(edge.capacity > nodes[i].flow)  flow[i][edge.to] = edge.capacity;
                 flow[i][edge.to] = nodes[i].flow;
@@ -172,7 +173,7 @@ public class Graph {
         }
 
         for(int i = 1; i <= nodes.length; i++){
-            for(Edge edge: nodes[i - 1].adj){
+            for(Exc1.Edge edge: nodes[i - 1].adj){
                 //dist[]
             }
         }

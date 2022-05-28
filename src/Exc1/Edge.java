@@ -1,3 +1,5 @@
+package Exc1;
+
 // Classe que representa uma aresta
 class Edge {
     int to;     // No destino
