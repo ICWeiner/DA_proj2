@@ -9,7 +9,7 @@ public class Proj2 {
     public static void main(String[] args) {
 
         try {
-            File file = new File("input/basic.txt");
+            File file = new File("input/in01_b.txt");
             Scanner in = new Scanner(file);
             int nodes = in.nextInt();
             int e = in.nextInt();
@@ -21,7 +21,8 @@ public class Proj2 {
                 h.addLink(a,b,c,d);
             }
 
-            //chamar esta funçoes faz o que é pedido no cenario 1
+            System.out.println("Exercício 1:");
+            //chamar estas funçoes faz o que é pedido no cenario 1
             g.maxPath(1);   // encontrar caminho com mais capacidade para o no final
             g.dijkstra(1);  //encontrar caminho mais curto para o no final
     

@@ -112,15 +112,14 @@ public class Graph2 {
   }
   
   private void groupPath(int size) {      // Exercício 2.1
-    int max = 0, maxInt = 0;  // max é o index da lista e maxInt é o valor nessa posição
+    int max = -1, maxInt = -1;  // max é o index da lista e maxInt é o valor nessa posição
     while(true){
       for(int i=0; i<flux.size() ;i++)
         if(flux.get(i) > maxInt){
           max = i;
           maxInt = flux.get(i);
         }
-        
-      reverse(paths.get(max));
+
       System.out.print("Fluxo neste caminho é " + maxInt + ": 1 -> ");
       for (int a=0; a<(paths.get(max).size()-1) ;a++)
         System.out.print(paths.get(max).get(a) + " -> ");
