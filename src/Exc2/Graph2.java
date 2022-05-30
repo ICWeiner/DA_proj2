@@ -5,14 +5,25 @@ import java.util.*;
 import static java.util.Collections.reverse;
 
 public class Graph2 {
-  int n;                       // Numero de nos do grafo
-  int e;                       // Numero de relaçoes no grafo
-  Vector<Vector<Integer>> adj; // Lista de adjacencias
-  int[][] cap;                 // Matriz de capacidades
-  int[][] time;                // Matriz de tempo
+  /** Number of nodes in the graph */
+  int n;
+  /** Number of relationships in the graph */
+  int e;
+  /** Vector of vectors of adjacencies */
+  Vector<Vector<Integer>> adj;
+  /** Matrix of capacities */
+  int[][] cap;
+  /** Matrix of time */
+  int[][] time;
+  /** List of lists with paths */
   List<List<Integer>> paths;
+  /** List of flux */
   List<Integer> flux;
   
+  /** @Constructor of Graph
+   * @for to initialize all vectors for n nodes
+   * @cap is initialized with n+1 since nodes start in 1 instead of 0
+   * @time is initialized with n+1 since nodes start in 1 instead of 0  */
   public Graph2(int n, int e) {
     this.n = n;
     this.e = e;
@@ -22,73 +33,71 @@ public class Graph2 {
     time = new int[n + 1][n + 1]; // +1 se os nos comecam em 1 ao inves de 0
   }
   
+  /** adjacencies of the undirected graph, because we may have to walk in the opposite <br>
+   * direction while looking for augmentation paths */
   public void addLink(int a, int b, int c, int d) {
-    // adjacencias do grafo nao dirigido, porque podemos ter de andar no sentido
-    // contrario ao procurarmos caminhos de aumento
     adj.get(a).add(b);
     adj.get(b).add(a);
     cap[a][b] = c;
     time[a][b] = d;
   }
   
-  // BFS para encontrar caminho de aumento
-  // devolve valor do fluxo nesse caminho
+  /** @function BFS to find augmentation path returns flow value in that path */
   int bfs(int s, int t, int[] parent) {
     for (int i = 1; i <= n; i++) parent[i] = -1;
     
     parent[s] = -2;
-    Queue<NodeQ> q = new LinkedList<>(); // fila do BFS
-    // inicializar com no origem e capacidade infinita
+    Queue<NodeQ> q = new LinkedList<>(); // BFS queue
+    // boot with source node and infinite capacity
     q.add(new NodeQ(s, Integer.MAX_VALUE));
     
     while (!q.isEmpty()) {
-      // returar primeiro no da fila
+      // return first in queue
       int cur = q.peek().node;
       int flow = q.peek().flow;
       q.poll();
       
-      // percorrer nos adjacentes ao no atual (cur)
+      // loop through nodes adjacent to the current node (cur)
       for (int next : adj.get(cur)) {
-        // se o vizinho ainda nao foi visitado (parent==-1)
-        // e a aresta respetiva ainda tem capacidade para passar fluxo
+        // if the neighbor has not yet been visited (parent==-1)
+        // the respective edge still has the capacity to pass flow
         if (parent[next] == -1 && cap[cur][next] > 0) {
-          parent[next] = cur;                        // atualizar pai
-          int new_flow = Math.min(flow, cap[cur][next]); // atualizar fluxo
-          if (next == t) return new_flow;            // chegamos ao final?
-          q.add(new NodeQ(next, new_flow));          // adicionar a fila
+          parent[next] = cur;                               // update father
+          int new_flow = Math.min(flow, cap[cur][next]);    // update flux
+          if (next == t) return new_flow;                   // have we arrived the end ?
+          q.add(new NodeQ(next, new_flow));                 // add to queue
         }
       }
     }
     return 0;
   }
   
-  // Algoritmo de Edmonds-Karp para fluxo maximo entre s e t
-  // devolve valor do fluxo maximo (cap[][] fica com grafo residual)
+  /** Edmonds-Karp algorithm for maximum flow between s and t that returns maximum flow value (cap[][] gets residual graph) */
   public void maxFlow(int s, int t, int groupSize) {
-    int flow = 0, i = 0;                // fluxo a calcular
-    int[] parent = new int[n + 1]; // array de pais (permite reconstruir caminho)
+    int flow = 0, i = 0;                // flux to be calculated
+    int[] parent = new int[n + 1];      // parent array (allows rebuild path)
     paths = new LinkedList<>();
     flux = new LinkedList<>();
     
     while (true) {
-      int new_flow = bfs(s, t, parent); // fluxo de um caminho de aumento
-      if (new_flow == 0) { // se nao existir, terminar algoritmo de Edmonds-Karp
+      int new_flow = bfs(s, t, parent);     // flow of an increase path
+      if (new_flow == 0) {                  // if not, terminate Edmonds-Karp algorithm
         if (flow < groupSize) {
           System.out.println("Impossible to travel as a group");
           break;
         }
-        System.out.println("Fluxo para o grupo maximo: " + flow);
+        System.out.println("Flow for the maximum group: " + flow);
         maxPath();
-        System.out.println("Fluxo para o grupo de " + groupSize + ":");
+        System.out.println("Flow for the group of " + groupSize + ":");
         groupPath(groupSize);
         break;
       }
       
       paths.add(new LinkedList<>());
       flux.add(new_flow);
-      flow += new_flow;  // aumentar fluxo total com fluxo deste caminho
+      flow += new_flow;               // increase total flow with flow this way
       int cur = t;
-      while (cur != s) { // percorrer caminho de aumento e alterar arestas
+      while (cur != s) {              // traverse augmentation path and change edges
         paths.get(i).add(cur);
         int prev = parent[cur];
         cap[prev][cur] -= new_flow;
@@ -99,11 +108,12 @@ public class Graph2 {
     }
   }
   
-  private void maxPath() {                  // Exercício 2.3
+  /** @function that determines all paths for max group  */
+  private void maxPath() {                  // Exercise 2.3
     int i=0;
     for (List<Integer> path : paths) {
       reverse(path);
-      System.out.print("Fluxo neste caminho é " + flux.get(i) + ": 1 -> ");
+      System.out.print("Flow on this path is " + flux.get(i) + ": 1 -> ");
       for (int a = 0; a < (path.size() - 1); a++)
         System.out.print(path.get(a) + " -> ");
       System.out.println(path.get(path.size() - 1));
@@ -111,8 +121,9 @@ public class Graph2 {
     }
   }
   
-  private void groupPath(int size) {      // Exercício 2.1
-    int max = -1, maxInt = -1;  // max é o index da lista e maxInt é o valor nessa posição
+  /** @function that determines number of needed paths for the group amount specified  */
+  private void groupPath(int size) {      // Exercise 2.1
+    int max = -1, maxInt = -1;            // max is the index of the list and maxInt is the value at that position
     while(true){
       for(int i=0; i<flux.size() ;i++)
         if(flux.get(i) > maxInt){
@@ -120,7 +131,7 @@ public class Graph2 {
           maxInt = flux.get(i);
         }
 
-      System.out.print("Fluxo neste caminho é " + maxInt + ": 1 -> ");
+      System.out.print("Flow on this path is " + maxInt + ": 1 -> ");
       for (int a=0; a<(paths.get(max).size()-1) ;a++)
         System.out.print(paths.get(max).get(a) + " -> ");
       System.out.println(paths.get(max).get(paths.get(max).size()-1));

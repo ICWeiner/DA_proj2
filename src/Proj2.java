@@ -21,13 +21,13 @@ public class Proj2 {
                 h.addLink(a,b,c,d);
             }
 
-            System.out.println("Exercício 1:");
-            //chamar estas funçoes faz o que é pedido no cenario 1
-            g.maxPath(1);   // encontrar caminho com mais capacidade para o no final
-            g.dijkstra(1);  //encontrar caminho mais curto para o no final
+            System.out.println("Exercise 1:");
+            // calling these functions does what is asked in scenario 1
+            g.maxPath(1);   // find path with more capacity for the in the end
+            g.dijkstra(1);  // find the shortest way to the in the end
     
             System.out.println("Exercício 2:");
-            //chamar esta funçoes faz o que é pedido no cenario 2
+            // calling this function does what is requested in scenario 2
             h.maxFlow(1,nodes,6);
             
         }catch (FileNotFoundException e){

@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4ace7f10-41ce-4ce8-9afe-cc41331129b1" name="Changes" comment="Fixed printing order on groupPath function">
+    <list default="true" id="4ace7f10-41ce-4ce8-9afe-cc41331129b1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Exc1/Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exc1/Edge.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Exc2/Graph2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exc2/Graph2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Proj2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Proj2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

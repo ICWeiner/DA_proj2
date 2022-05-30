@@ -2,12 +2,15 @@ package Exc1;
 
 import java.util.*;
 import static java.util.Collections.reverse;
-
-// Classe que representa um grafo
+/** Class that represents a graph */
 public class Graph {
-    int n;          // Numero de nos do grafo
-    Node[] nodes;   // Array para conter os nos
+    /** Number of nodes in graph */
+    int n;
+    /** Array to hold all the nodes */
+    Node[] nodes;
     
+    /** @Constructor of Graph
+     * @nodes array is initialized with n + 1 nodes */
     public Graph(int n) {
         this.n = n;
         nodes = new Node[n+1];  // +1 se os nos comecam em 1 ao inves de 0
@@ -15,9 +18,9 @@ public class Graph {
             nodes[i] = new Node();
     }
     
+    /**  */
     public void addLink(int a, int b, int c, int d) {
         nodes[a].adj.add(new Edge(b, c, d));
-        //System.out.println(a + " " + b + " " + c + " " + d + " ");
     }
 
 
