@@ -19,6 +19,8 @@ public class Graph2 {
   List<List<Integer>> paths;
   /** List of flux */
   List<Integer> flux;
+  /** List of Edges containing time */
+  List<Edge> times;
   
   /** @Constructor of Graph
    * @for to initialize all vectors for n nodes
@@ -78,6 +80,7 @@ public class Graph2 {
     int[] parent = new int[n + 1];      // parent array (allows rebuild path)
     paths = new LinkedList<>();
     flux = new LinkedList<>();
+    times = new LinkedList<>();
     
     while (true) {
       int new_flow = bfs(s, t, parent);     // flow of an increase path
@@ -90,6 +93,7 @@ public class Graph2 {
         maxPath();
         System.out.println("Flow for the group of " + groupSize + ":");
         groupPath(groupSize);
+        timeFLux();
         break;
       }
       
@@ -123,7 +127,7 @@ public class Graph2 {
   
   /** @function that determines number of needed paths for the group amount specified  */
   private void groupPath(int size) {      // Exercise 2.1
-    int max = -1, maxInt = -1;            // max is the index of the list and maxInt is the value at that position
+    int max = -1, maxInt = -1, s = 0;            // max is the index of the list and maxInt is the value at that position
     while(true){
       for(int i=0; i<flux.size() ;i++)
         if(flux.get(i) > maxInt){
@@ -135,11 +139,25 @@ public class Graph2 {
       for (int a=0; a<(paths.get(max).size()-1) ;a++)
         System.out.print(paths.get(max).get(a) + " -> ");
       System.out.println(paths.get(max).get(paths.get(max).size()-1));
+      
+      while(s < paths.get(max).size()-1){
+        Edge e = new Edge(paths.get(max).get(s), paths.get(max).get(s+1), time[paths.get(max).get(s)][paths.get(max).get(s+1)]);
+        times.add(e);
+        s++;
+      }
+
       if(size - maxInt <= 0) break;
       size -= maxInt;
       flux.remove(max);
       paths.remove(max);
-      max = 0; maxInt = 0;
+      max = 0; maxInt = 0; s = 0;
     }
+  }
+  
+  private void timeFLux(){
+    Collections.sort(times);
+    System.out.println("Time flux" + times.size());
+    for (Edge e : times)
+      System.out.println(e.start + ", " + e.to + " tempo:" + e.time);
   }
 }
