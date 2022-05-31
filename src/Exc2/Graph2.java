@@ -164,8 +164,11 @@ public class Graph2 {
     //Queue nodeq = new ConcurrentLinkedQueue(); might need a queue, might not
 
     for (Edge e : CPMedges) {
-      System.out.println(e.start + ", " + e.to + " tempo:" + e.time);
+      //System.out.println(e.start + ", " + e.to + " tempo:" + e.time);
       //do math involving ES and EF here
+      ES[e.to] = Integer.max(ES[e.to],ES[e.to] + e.time);
+      EF[e.to] = Integer.max(EF[e.to],ES[e.start] + e.time);
+      System.out.println(e.start + "," + e.to + ",  ES:" + ES[e.to] + ",  EF:" + EF[e.to]);
     }
   }
 }
