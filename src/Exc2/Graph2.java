@@ -32,12 +32,11 @@ public class Graph2 {
     this.e = e;
     adj = new Vector<>();
     for (int i = 0; i <= n; i++) adj.add(new Vector<>());
-    cap = new int[n + 1][n + 1]; // +1 se os nos comecam em 1 ao inves de 0
-    time = new int[n + 1][n + 1]; // +1 se os nos comecam em 1 ao inves de 0
+    cap = new int[n + 1][n + 1];
+    time = new int[n + 1][n + 1];
   }
   
-  /** adjacencies of the undirected graph, because we may have to walk in the opposite <br>
-   * direction while looking for augmentation paths */
+  /** adjacency of node a to node b while also adding the capacity and time of the path */
   public void addLink(int a, int b, int c, int d) {
     adj.get(a).add(b);
     adj.get(b).add(a);
@@ -45,37 +44,39 @@ public class Graph2 {
     time[a][b] = d;
   }
   
-  /** @function BFS to find augmentation path returns flow value in that path */
+  /** @function BFS to find augmentation path returns flow value in that path
+   * @Queue queue to be filled with nodes, initial insertion is with the starting node set to the max capacity
+   * @while removes the first node from the queue and loops through the adjacent nodes only if the node hasn't been visited and the respective edge still has capacity to pass flow
+   * @if when it enters the if clause it updates the father also updates the flux and checks if it has reached the end, if it hasn't then it adds the node to queue <br>
+   * if it has reached the end return the new flow */
   int bfs(int s, int t, int[] parent) {
     for (int i = 1; i <= n; i++) parent[i] = -1;
     
     parent[s] = -2;
-    Queue<NodeQ> q = new LinkedList<>(); // BFS queue
-    // boot with source node and infinite capacity
+    Queue<NodeQ> q = new LinkedList<>();
     q.add(new NodeQ(s, Integer.MAX_VALUE));
     
     while (!q.isEmpty()) {
-      // return first in queue
       int cur = q.peek().node;
       int flow = q.peek().flow;
       q.poll();
       
-      // loop through nodes adjacent to the current node (cur)
       for (int next : adj.get(cur)) {
-        // if the neighbor has not yet been visited (parent==-1)
-        // the respective edge still has the capacity to pass flow
         if (parent[next] == -1 && cap[cur][next] > 0) {
-          parent[next] = cur;                               // update father
-          int new_flow = Math.min(flow, cap[cur][next]);    // update flux
-          if (next == t) return new_flow;                   // have we arrived the end ?
-          q.add(new NodeQ(next, new_flow));                 // add to queue
+          parent[next] = cur;
+          int new_flow = Math.min(flow, cap[cur][next]);
+          if (next == t) return new_flow;
+          q.add(new NodeQ(next, new_flow));
         }
       }
     }
     return 0;
   }
   
-  /** Edmonds-Karp algorithm for maximum flow between s and t that returns maximum flow value (cap[][] gets residual graph) */
+  /** @function Edmonds-Karp algorithm for maximum flow between s and t that returns maximum flow value (cap[][] gets residual graph)
+   * @variables flow is the flow to be determined and array parent to rebuild the path also initialize the two different lists also the TreeSet
+   * @flow is determined by calling the function bfs <br>
+   * when the flow is returned form the bfs function we create a new path inside the list of lists, and we add the flux to the list  */
   public void maxFlow(int s, int t, int groupSize) {
     int flow = 0, i = 0;                // flux to be calculated
     int[] parent = new int[n + 1];      // parent array (allows rebuild path)

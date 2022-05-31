@@ -9,7 +9,7 @@ public class Proj2 {
     public static void main(String[] args) {
 
         try {
-            File file = new File("input/basic.txt");
+            File file = new File("input/in02_b.txt");
             Scanner in = new Scanner(file);
             int nodes = in.nextInt();
             int e = in.nextInt();
