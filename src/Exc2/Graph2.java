@@ -1,6 +1,7 @@
 package Exc2;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static java.util.Collections.reverse;
 
@@ -158,6 +159,13 @@ public class Graph2 {
   private void timeFLux(){
     //CPMedges.
     System.out.println("Time flux:" + CPMedges.size());
-    for (Edge e : CPMedges) System.out.println(e.start + ", " + e.to + " tempo:" + e.time);
+    int[] ES = new int[n + 1];
+    int[] EF = new int[n + 1];
+    //Queue nodeq = new ConcurrentLinkedQueue(); might need a queue, might not
+
+    for (Edge e : CPMedges) {
+      System.out.println(e.start + ", " + e.to + " tempo:" + e.time);
+      //do math involving ES and EF here
+    }
   }
 }
