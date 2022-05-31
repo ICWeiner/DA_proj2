@@ -9,7 +9,7 @@ public class Proj2 {
     public static void main(String[] args) {
 
         try {
-            File file = new File("input/basic.txt");
+            File file = new File("input/test.txt");
             Scanner in = new Scanner(file);
             int nodes = in.nextInt();
             int e = in.nextInt();
@@ -28,7 +28,7 @@ public class Proj2 {
     
             System.out.println("Exercício 2:");
             // calling this function does what is requested in scenario 2
-            h.maxFlow(1,nodes,12);
+            h.maxFlow(1,nodes,5);
             
         }catch (FileNotFoundException e){
             e.printStackTrace();

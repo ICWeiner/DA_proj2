@@ -158,7 +158,6 @@ public class Graph2 {
   private void timeFLux(){
     //CPMedges.
     System.out.println("Time flux:" + CPMedges.size());
-    for (Edge e : CPMedges)
-      System.out.println(e.start + ", " + e.to + " tempo:" + e.time);
+    for (Edge e : CPMedges) System.out.println(e.start + ", " + e.to + " tempo:" + e.time);
   }
 }
