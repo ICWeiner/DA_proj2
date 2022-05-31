@@ -157,8 +157,7 @@ public class Graph2 {
   }
   
   private void timeFLux(){
-    //CPMedges.
-    System.out.println("Time flux:" + CPMedges.size());
+    //System.out.println("Time flux:" + CPMedges.size());
     int[] ES = new int[n + 1];
     int[] EF = new int[n + 1];
     //Queue nodeq = new ConcurrentLinkedQueue(); might need a queue, might not
@@ -166,9 +165,14 @@ public class Graph2 {
     for (Edge e : CPMedges) {
       //System.out.println(e.start + ", " + e.to + " tempo:" + e.time);
       //do math involving ES and EF here
-      ES[e.to] = Integer.max(ES[e.to],ES[e.to] + e.time);
-      EF[e.to] = Integer.max(EF[e.to],ES[e.start] + e.time);
-      System.out.println(e.start + "," + e.to + ",  ES:" + ES[e.to] + ",  EF:" + EF[e.to]);
+
+      //System.out.println(EF[e.to] + " or " + EF[e.start] + "+" + e.time);
+
+      ES[e.to] = EF[e.start];//Integer.max(EF[e.to],ES[e.start] + e.time);
+      EF[e.to] = Integer.max(EF[e.to],EF[e.start] + e.time);
+
+      //System.out.println(e.start + "," + e.to + ",  ES:" + ES[e.to] + ",  EF:" + EF[e.to]);
     }
+    System.out.println( "Earliest finish time is:" + EF[n]);
   }
 }
