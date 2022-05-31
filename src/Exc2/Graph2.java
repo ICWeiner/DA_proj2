@@ -76,17 +76,20 @@ public class Graph2 {
   /** @function Edmonds-Karp algorithm for maximum flow between s and t that returns maximum flow value (cap[][] gets residual graph)
    * @variables flow is the flow to be determined and array parent to rebuild the path also initialize the two different lists also the TreeSet
    * @flow is determined by calling the function bfs <br>
-   * when the flow is returned form the bfs function we create a new path inside the list of lists, and we add the flux to the list  */
+   * when the flow is returned from the bfs function we create a new path inside the list of lists <br>, and we add the flux to the flux list
+   * then traverse the node cur until reaching the s node adding to the capacity array from prev to cur
+   * the new flow and subtracting the flow from cur to prev creating the residual flow <br>
+   * when the new flow is zero the while breaks and all the paths are sent to the different functions to create the different solutions for various exercises*/
   public void maxFlow(int s, int t, int groupSize) {
-    int flow = 0, i = 0;                // flux to be calculated
-    int[] parent = new int[n + 1];      // parent array (allows rebuild path)
+    int flow = 0, i = 0;
+    int[] parent = new int[n + 1];
     paths = new LinkedList<>();
     flux = new LinkedList<>();
     CPMedges = new TreeSet<>();
     
     while (true) {
-      int new_flow = bfs(s, t, parent);     // flow of an increase path
-      if (new_flow == 0) {                  // if not, terminate Edmonds-Karp algorithm
+      int new_flow = bfs(s, t, parent);
+      if (new_flow == 0) {
         if (flow < groupSize) {
           System.out.println("Impossible to travel as a group");
           break;
@@ -101,9 +104,9 @@ public class Graph2 {
       
       paths.add(new LinkedList<>());
       flux.add(new_flow);
-      flow += new_flow;               // increase total flow with flow this way
+      flow += new_flow;
       int cur = t;
-      while (cur != s) {              // traverse augmentation path and change edges
+      while (cur != s) {
         paths.get(i).add(cur);
         int prev = parent[cur];
         cap[prev][cur] -= new_flow;
@@ -114,8 +117,8 @@ public class Graph2 {
     }
   }
   
-  /** @function that determines all paths for max group  */
-  private void maxPath() {                  // Exercise 2.3
+  /** @function that determines all paths for max group by printing all possible paths inserted in the List of lists paths */
+  private void maxPath() {
     int i=0;
     for (List<Integer> path : paths) {
       path.add(1);
@@ -128,9 +131,14 @@ public class Graph2 {
     }
   }
   
-  /** @function that determines number of needed paths for the group amount specified  */
-  private void groupPath(int size) {      // Exercise 2.1
-    int max = -1, maxInt = -1, s = 0;            // max is the index of the list and maxInt is the value at that position
+  /** @function that determines number of needed paths for the group amount specified
+   * @variables max is the index of the list and maxInt is the value of flux at that position, size corresponds to the size of the group
+   * @while inside the while the for looks for the max flow inside the list of flows when determined
+   * it puts the i value that corresponds to the list inside the paths list then prints the list, the while breaks
+   * when the size of the group minus the maxInt is equal or less the 0 <br>
+   * inside this function we also add all the edges of the path tp a CPMedges list fpr another function relating the timeFlux */
+  private void groupPath(int size) {
+    int max = -1, maxInt = -1, s = 0;
     while(true){
       for(int i=0; i<flux.size() ;i++)
         if(flux.get(i) > maxInt){
@@ -138,7 +146,7 @@ public class Graph2 {
           maxInt = flux.get(i);
         }
 
-      System.out.print("Flow on this path is " + maxInt + ":");
+      System.out.print("Flow on this path is " + maxInt + " : ");
       for (int a=0; a<(paths.get(max).size()-1) ;a++)
         System.out.print(paths.get(max).get(a) + " -> ");
       System.out.println(paths.get(max).get(paths.get(max).size()-1));

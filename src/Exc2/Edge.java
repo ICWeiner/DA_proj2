@@ -15,6 +15,7 @@ public class Edge implements Comparable<Edge>{
       this.time = time;
     }
   
+    /** function to compare edges in order of starting node and then node destiny */
   @Override
   public int compareTo(Edge o) {
     if (start < o.start) return -1;
