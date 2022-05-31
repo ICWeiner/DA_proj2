@@ -28,7 +28,7 @@ public class Proj2 {
     
             System.out.println("Exercício 2:");
             // calling this function does what is requested in scenario 2
-            h.maxFlow(1,nodes,6);
+            h.maxFlow(1,nodes,12);
             
         }catch (FileNotFoundException e){
             e.printStackTrace();

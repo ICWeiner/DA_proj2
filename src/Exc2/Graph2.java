@@ -20,7 +20,7 @@ public class Graph2 {
   /** List of flux */
   List<Integer> flux;
   /** List of Edges containing time */
-  List<Edge> times;
+  Set<Edge> CPMedges;
   
   /** @Constructor of Graph
    * @for to initialize all vectors for n nodes
@@ -80,7 +80,7 @@ public class Graph2 {
     int[] parent = new int[n + 1];      // parent array (allows rebuild path)
     paths = new LinkedList<>();
     flux = new LinkedList<>();
-    times = new LinkedList<>();
+    CPMedges = new TreeSet<>();
     
     while (true) {
       int new_flow = bfs(s, t, parent);     // flow of an increase path
@@ -116,8 +116,9 @@ public class Graph2 {
   private void maxPath() {                  // Exercise 2.3
     int i=0;
     for (List<Integer> path : paths) {
+      path.add(1);
       reverse(path);
-      System.out.print("Flow on this path is " + flux.get(i) + ": 1 -> ");
+      System.out.print("Flow on this path is " + flux.get(i) + ":");
       for (int a = 0; a < (path.size() - 1); a++)
         System.out.print(path.get(a) + " -> ");
       System.out.println(path.get(path.size() - 1));
@@ -135,14 +136,14 @@ public class Graph2 {
           maxInt = flux.get(i);
         }
 
-      System.out.print("Flow on this path is " + maxInt + ": 1 -> ");
+      System.out.print("Flow on this path is " + maxInt + ":");
       for (int a=0; a<(paths.get(max).size()-1) ;a++)
         System.out.print(paths.get(max).get(a) + " -> ");
       System.out.println(paths.get(max).get(paths.get(max).size()-1));
       
       while(s < paths.get(max).size()-1){
         Edge e = new Edge(paths.get(max).get(s), paths.get(max).get(s+1), time[paths.get(max).get(s)][paths.get(max).get(s+1)]);
-        times.add(e);
+        CPMedges.add(e);
         s++;
       }
 
@@ -155,9 +156,9 @@ public class Graph2 {
   }
   
   private void timeFLux(){
-    Collections.sort(times);
-    System.out.println("Time flux" + times.size());
-    for (Edge e : times)
+    //CPMedges.
+    System.out.println("Time flux:" + CPMedges.size());
+    for (Edge e : CPMedges)
       System.out.println(e.start + ", " + e.to + " tempo:" + e.time);
   }
 }
