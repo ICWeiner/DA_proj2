@@ -23,27 +23,23 @@ public class Graph {
         nodes[a].adj.add(new Edge(b, c, d));
     }
 
-
-    
-    // Algoritmo de Dijkstra-ish for max flow path
+    /** Dijkstra's algorithm slightly modified to find max flow path*/
     public void maxPath(int s) {//this whole thing is sussy, im still not 100% how it works
-        //Inicializar nos como nao visitados e com distancia infinita
-        for (int i=1; i<=n; i++) {
+        for (int i=1; i<=n; i++) {//Set all node as unvisited
             nodes[i].visited  = false;
         }
 
-        //nodes[s].distance = Integer.MAX_VALUE; //integer max probably what was the point of this? oh well
-        TreeSet<NodeQ> q = new TreeSet<>();
-        q.add(new NodeQ(0, s)); // Criar um par (dist=0, no=s)
+        TreeSet<NodeQ> q = new TreeSet<>();// TreeSet used for dijkstra's algorithm
+        q.add(new NodeQ(0, s)); // Initial node
 
 
-        int[] caps = new int[n + 1]; // array que contem a capacidade de cada no
-        int[] pai = new int[ n +1]; // array que contem o pai de cada no
-        for (int i = 2 ; i < caps.length ; i++) caps[i] = Integer.MIN_VALUE;
+        int[] caps = new int[n + 1]; // Array that contains the capacity of each node
+        int[] pai = new int[ n +1]; // Array that contains the father of the corresponding capacity of each node
+        //for (int i = 2 ; i < caps.length ; i++) caps[i] = 0; // i dont think we need this anymore
         caps[1] = Integer.MAX_VALUE;
 
         while (!q.isEmpty()) {
-            // Retirar no com menor distancia (o "primeiro" do set, que e uma BST)
+            //Start with the lowest ditance node
             NodeQ nq = q.pollFirst();
             int  v = nq.node;
             nodes[v].visited = true;

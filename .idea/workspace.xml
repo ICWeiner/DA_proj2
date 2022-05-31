@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4ace7f10-41ce-4ce8-9afe-cc41331129b1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Exc1/Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exc1/Edge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Exc2/Graph2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exc2/Graph2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Exc1/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exc1/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Exc1/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exc1/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Exc1/NodeQ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exc1/NodeQ.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +62,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Proj2" />
         <item itemvalue="Application.Proj2" />
       </list>
     </recent_temporary>

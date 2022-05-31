@@ -1,18 +1,23 @@
 package Exc1;
 
+/** class that represents a node and implements the Comparable interface
+ * used in the priority queue for dijkstra's algorithm*/
 class NodeQ implements Comparable<NodeQ> {
-    public int cost;
+    /**Current capacity of node */
+    public int capacity;
+    /** Number of node this comparable object represents*/
     public int node;
-    
+
+    /**Constructor sets capacity and node */
     NodeQ(int c, int n) {
-        cost = c;
+        capacity = c;
         node = n;
     }
     
     @Override
     public int compareTo(NodeQ nq) {
-        if (cost < nq.cost) return -1;
-        if (cost > nq.cost) return +1;
+        if (capacity < nq.capacity) return -1;
+        if (capacity > nq.capacity) return +1;
         if (node < nq.node) return -1;
         if (node > nq.node) return +1;
         return 0;

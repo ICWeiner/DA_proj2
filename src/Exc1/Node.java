@@ -1,16 +1,17 @@
 package Exc1;
 
-import Exc1.Edge;
-
 import java.util.LinkedList;
 
-// Classe que representa um no
+/** Class that represents an edge */
 class Node {
-    public LinkedList<Edge> adj; // Lista de adjacencias
-    public int distance;         // Distancia ao no origem da pesquisa
+    /** List of edges that start from node*/
+    public LinkedList<Edge> adj;
+    /** Smallest distance to starting node*/
+    public int distance;
+    /** Marks if node has been visited*/
     public boolean visited;
 
-
+    /** Constructor initialized adj as an empty list*/
     Node() {
         adj = new LinkedList<>();
     }
