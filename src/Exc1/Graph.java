@@ -31,7 +31,8 @@ public class Graph {
      * we look to see if capacity between the node and edge is smaller than the capacity already attributed to the node if it is
      * we insert the new node in the q with that capacity and do it until the queue is finished. <br>
      * when its finished we have found the biggest path. */
-    public void maxPath(int s) {
+    public void maxPath() {
+        int s = 1;
         for (int i=1; i<=n; i++) {
             nodes[i].visited  = false;
         }
@@ -72,15 +73,16 @@ public class Graph {
         System.out.println(print.get(print.size()-1));
     }
 
-    /** Dijkstra algorithm to find the shortest path form start to end. <br>
-     * first we initialize all nodes to unvisited and to max distance <br>
+    /** Dijkstra's algorithm to find the shortest path form start to end. <br>
+     * first we initialize all nodes as unvisited and with the highest possible max distance <br>
      * then make the first node distance to 0 alse create a TreeSet and add the first node also initialize
      * pai array that contains the father of the corresponding  node <br>
      * then in the while we look for the lowest distance node and look for its edges <br>
      * we look to see if the distance between the node and edge is smaller if it is
      * we remove the node from the set then insert it with the new shorter distance and do it until the queue is finished. <br>
      * when its finished we have found the shortest path. */
-    public void dijkstra(int s) {
+    public void dijkstra() {
+        int s = 1;
         for (int i = 1; i <= n; i++) {
             nodes[i].distance = Integer.MAX_VALUE;
             nodes[i].visited = false;

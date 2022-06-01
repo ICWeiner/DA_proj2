@@ -80,7 +80,8 @@ public class Graph2 {
    * then traverse the node cur until reaching the s node adding to the capacity array from prev to cur
    * the new flow and subtracting the flow from cur to prev creating the residual flow <br>
    * when the new flow is zero the while breaks and all the paths are sent to the different functions to create the different solutions for various exercises*/
-  public void maxFlow(int s, int t, int groupSize) {
+  public void maxFlow( int t, int groupSize) {
+    int s = 1;
     int flow = 0, i = 0;
     int[] parent = new int[n + 1];
     paths = new LinkedList<>();
@@ -94,9 +95,9 @@ public class Graph2 {
           System.out.println("Impossible to travel as a group");
           break;
         }
-        System.out.println("Flow for the maximum group: " + flow);
+        System.out.println("\nFlow for the maximum group: " + flow);
         maxPath();
-        System.out.println("Flow for the group of " + groupSize + ":");
+        System.out.println("\nFlow for the group of " + groupSize + ":");
         groupPath(groupSize);
         timeFLux();
         break;
@@ -166,22 +167,101 @@ public class Graph2 {
   }
   
   private void timeFLux(){
-    //System.out.println("Time flux:" + CPMedges.size());
-    int[] ES = new int[n + 1];
-    int[] EF = new int[n + 1];
-    //Queue nodeq = new ConcurrentLinkedQueue(); might need a queue, might not
-
-    for (Edge e : CPMedges) {
-      //System.out.println(e.start + ", " + e.to + " tempo:" + e.time);
-      //do math involving ES and EF here
-
-      //System.out.println(EF[e.to] + " or " + EF[e.start] + "+" + e.time);
-
-      ES[e.to] = EF[e.start];//Integer.max(EF[e.to],ES[e.start] + e.time);
-      EF[e.to] = Integer.max(EF[e.to],EF[e.start] + e.time);
-
-      //System.out.println(e.start + "," + e.to + ",  ES:" + ES[e.to] + ",  EF:" + EF[e.to]);
-    }
-    System.out.println( "Earliest finish time is:" + EF[n]);
+    int[] earliestStart = EarliestFlux();
+    System.out.println("Earliest finish time is:" + earliestStart[n] );
+    latestFlux(earliestStart);
   }
+
+  private int[] EarliestFlux(){
+    int[] ES = new int[n + 1];
+    int[] prev = new int[n + 1];
+    int[] entries = new int[n + 1]; // grau de entrada de cada no
+    Stack<Integer> s = new Stack<>(); // stack que contem nos com grau de entrada de 0
+    int minDur = -1;
+
+    for (Edge e : CPMedges){
+      entries[e.to] = entries[e.to] + 1;
+    }
+
+    for (Edge e : CPMedges){
+      if (entries[e.start] == 0 && (!s.contains(e.start))) s.push(e.start);
+    }
+
+    while (!s.isEmpty()){
+      int currNode = s.pop();
+      //System.out.println("Current node: " + currNode);
+
+      if (minDur < ES[currNode]) minDur = ES[currNode];
+
+      for (Edge e : CPMedges){
+        if(e.start == currNode){
+          if (ES[e.to] < ES[currNode] + e.time){
+            ES[e.to] = ES[currNode] + e.time;
+            prev[e.to] = currNode;
+          }
+          entries[e.to] = entries[e.to] - 1;
+          if(entries[e.to] == 0 ){
+            s.push(e.to);
+          }
+        }
+      }
+    }
+
+    ES[n] = minDur;
+
+    return ES;
+  }
+
+  private void latestFlux(int ES[]){
+    int[] LF = new int[n + 1];
+    int[] exits = new int[n + 1]; // grau de saida de cada no
+    Set<Edge> CPMedgesReverse = new TreeSet<>();
+    Stack<Integer> s = new Stack<>();
+    int totalWait = 0;
+
+    for(int i = 1; i < LF.length; i++){
+      LF[i] = ES[n];
+    }
+
+    for (Edge e : CPMedges){
+      exits[e.start] = exits[e.start] + 1;//nao devia ser para e.start?
+      CPMedgesReverse.add(new Edge(e.to , e.start,e.time));
+    }
+
+    for (Edge e : CPMedgesReverse){
+      if (exits[e.start] == 0 && (!s.contains(e.start))) s.push(e.start);
+      //System.out.println(e.start + "," + e.to);
+    }
+
+    while (!s.isEmpty()) {
+      int currNode = s.pop();
+
+      for (Edge e : CPMedgesReverse){
+
+        if(e.start == currNode){
+          if (LF[e.to] > LF[currNode] - e.time){
+            LF[e.to] = LF[currNode] - e.time;
+
+          }
+          exits[e.to] = exits[e.to] - 1;
+          if(exits[e.to] == 0 ){
+            s.push(e.to);
+          }
+        }
+      }
+    }
+
+    System.out.println();
+    for(int i = 1 ; i < LF.length; i++){
+      if(ES[i]<LF[i] && ES[i]!=0){
+        int currWait = LF[i] - ES[i];
+        System.out.println("Tempo de espera livre:" + currWait + " no nó:" + i);
+        totalWait+=currWait;
+      }
+      //System.out.print(LF[i] + " ");
+
+    }
+    System.out.println("Tempo total livre:" + totalWait);
+  }
+
 }
