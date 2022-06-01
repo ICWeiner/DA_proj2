@@ -6,22 +6,21 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import static java.util.Collections.reverse;
 
 public class Graph2 {
-  /** Number of nodes in the graph */
-  int n;
-  /** Number of relationships in the graph */
-  int e;
-  /** Vector of vectors of adjacencies */
-  Vector<Vector<Integer>> adj;
-  /** Matrix of capacities */
-  int[][] cap;
-  /** Matrix of time */
-  int[][] time;
-  /** List of lists with paths */
-  List<List<Integer>> paths;
-  /** List of flux */
-  List<Integer> flux;
-  /** List of Edges containing time */
-  Set<Edge> CPMedges;
+  int n; /** Number of nodes in the graph */
+
+  int e; /** Number of edges in the graph */
+
+  Vector<Vector<Integer>> adj; /** Vector of vectors of adjacencies */
+
+  int[][] cap; /** Matrix of capacities */
+
+  int[][] time; /** Matrix of time */
+
+  List<List<Integer>> paths; /** List of lists with paths */
+
+  List<Integer> flux; /** List of flux */
+
+  Set<Edge> CPMedges; /** List of Edges used in a given path*/
   
   /** @Constructor of Graph
    * @for to initialize all vectors for n nodes
@@ -53,13 +52,13 @@ public class Graph2 {
     for (int i = 1; i <= n; i++) parent[i] = -1;
     
     parent[s] = -2;
-    Queue<NodeQ> q = new LinkedList<>();
+    List<NodeQ> q = new LinkedList<>();
     q.add(new NodeQ(s, Integer.MAX_VALUE));
     
     while (!q.isEmpty()) {
-      int cur = q.peek().node;
-      int flow = q.peek().flow;
-      q.poll();
+      int cur = q.get(0).node;
+      int flow =  q.get(0).flow;
+      q.remove(0);
       
       for (int next : adj.get(cur)) {
         if (parent[next] == -1 && cap[cur][next] > 0) {
@@ -118,7 +117,7 @@ public class Graph2 {
     }
   }
   
-  /** @function that determines all paths for max group by printing all possible paths inserted in the List of lists paths */
+  /** @function that prints all paths for the max flow of a given graph */
   private void maxPath() {
     int i=0;
     for (List<Integer> path : paths) {
@@ -127,17 +126,17 @@ public class Graph2 {
       System.out.print("Flow on this path is " + flux.get(i) + ":");
       for (int a = 0; a < (path.size() - 1); a++)
         System.out.print(path.get(a) + " -> ");
-      System.out.println(path.get(path.size() - 1));
+      System.out.println(path.get(path.size() - 1));// print like this so we dont get an arrow out of the last node(visual only)
       i++;
     }
   }
   
-  /** @function that determines number of needed paths for the group amount specified
+  /** @function that determines the needed paths for a given group size
    * @variables max is the index of the list and maxInt is the value of flux at that position, size corresponds to the size of the group
    * @while inside the while the for looks for the max flow inside the list of flows when determined
    * it puts the i value that corresponds to the list inside the paths list then prints the list, the while breaks
    * when the size of the group minus the maxInt is equal or less the 0 <br>
-   * inside this function we also add all the edges of the path tp a CPMedges list fpr another function relating the timeFlux */
+   * inside this function we also add all the edges of the path to a list for use in critical path method  */
   private void groupPath(int size) {
     int max = -1, maxInt = -1, s = 0;
     while(true){
@@ -165,7 +164,9 @@ public class Graph2 {
       max = 0; maxInt = 0; s = 0;
     }
   }
-  
+
+  /** @function calls other functions that use CPMto calculate earliest finish time and free time on any node
+   * */
   private void timeFLux(){
     int[] earliestStart = EarliestFlux();
     System.out.println("Earliest finish time is:" + earliestStart[n] );

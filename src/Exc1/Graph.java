@@ -40,11 +40,11 @@ public class Graph {
         TreeSet<NodeQ> q = new TreeSet<>();
         q.add(new NodeQ(0, s));
 
-        int[] caps = new int[n + 1];
-        int[] pai = new int[ n +1];
+        int[] caps = new int[n + 1];/**Array that contains the capacity of each node*/
+        int[] pai = new int[ n +1]; /**Array that contains the "father" of each node*/
         caps[1] = Integer.MAX_VALUE;
 
-        while (!q.isEmpty()) {
+        while (!q.isEmpty()) { //modified Dijkstra's algorithm to find max path
             NodeQ nq = q.pollFirst();
             int  v = nq.node;
             nodes[v].visited = true;
@@ -62,11 +62,11 @@ public class Graph {
         System.out.println("Maximum path found, capacity = "  + caps[caps.length - 1 ]);
         
         List<Integer> print = new LinkedList<>();
-        for (int i = n; i > 1;){
+        for (int i = n; i > 1;){//add the father of each node to a list, in reverse order
             print.add(i);
             i = pai[i];
         }
-        reverse(print);
+        reverse(print);// reverse the order to get the actual path take
         System.out.print(1 + " -> ");
         for (int a=0; a<(print.size()-1) ;a++)
             System.out.print(print.get(a) + " -> ");
@@ -102,7 +102,6 @@ public class Graph {
 
             for (Edge e : nodes[u].adj) {
                 int v = e.to;
-                //int cost = e.capacity;
                 if (!nodes[v].visited && nodes[u].distance + 1 < nodes[v].distance) {
                     q.remove(new NodeQ(nodes[v].distance, v));
                     nodes[v].distance = nodes[u].distance + 1;
@@ -112,10 +111,10 @@ public class Graph {
             }
         }
 
-        System.out.println("Caminho mais rapido encontrado, distancia = "  + nodes[n].distance);
+        System.out.println("Shortest path found, distance = "  + nodes[n].distance);
     
         List<Integer> print = new LinkedList<>();
-        for (int i = n; i > 1;){//imprimir caminho
+        for (int i = n; i > 1;){//Same as is written in maxPath()
             print.add(i);
             i = pai[i];
         }

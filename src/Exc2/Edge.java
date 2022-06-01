@@ -1,12 +1,9 @@
 package Exc2;
 
 public class Edge implements Comparable<Edge>{
-    /** Node start */
-    int start;
-    /** Node destiny */
-    int to;
-    /** time of node */
-    int time;
+    int start;  /** Node start */
+    int to;     /** Node destiny */
+    int time;   /** time of node */
     
     /** Edge constructor */
     Edge(int s, int t, int time) {
