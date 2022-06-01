@@ -123,7 +123,7 @@ public class Graph2 {
     for (List<Integer> path : paths) {
       path.add(1);
       reverse(path);
-      System.out.print("Flow on this path is " + flux.get(i) + ":");
+      System.out.print("Flow on this path is " + flux.get(i) + " : ");
       for (int a = 0; a < (path.size() - 1); a++)
         System.out.print(path.get(a) + " -> ");
       System.out.println(path.get(path.size() - 1));// print like this so we dont get an arrow out of the last node(visual only)
@@ -165,32 +165,34 @@ public class Graph2 {
     }
   }
 
-  /** @function calls other functions that use CPMto calculate earliest finish time and free time on any node
+  /** @function calls other functions that use CPM to compute the earliest finish time of the trip and free time on any node
    * */
   private void timeFLux(){
     int[] earliestStart = EarliestFlux();
-    System.out.println("Earliest finish time is:" + earliestStart[n] );
+    System.out.println("\nEarliest finish time is:" + earliestStart[n] );
     latestFlux(earliestStart);
   }
 
+  /** @function that computes the earliest start for each node
+   * @return array with n+1 positions containing the earliest start time for each i-node*/
   private int[] EarliestFlux(){
     int[] ES = new int[n + 1];
-    int[] prev = new int[n + 1];
-    int[] entries = new int[n + 1]; // grau de entrada de cada no
-    Stack<Integer> s = new Stack<>(); // stack que contem nos com grau de entrada de 0
-    int minDur = -1;
+    //int[] prev = new int[n + 1]; i dont think we need this
+    int[] entries = new int[n + 1]; // amount of edges entering each node
+    Stack<Integer> s = new Stack<>(); // stack containing nodes that have no entries left
+    int minDur = -1; //this var will hold the earliest finish time of the entire trip
 
     for (Edge e : CPMedges){
-      entries[e.to] = entries[e.to] + 1;
+      entries[e.to] = entries[e.to] + 1;//compute amount of edges entering each node
     }
 
-    for (Edge e : CPMedges){
-      if (entries[e.start] == 0 && (!s.contains(e.start))) s.push(e.start);
-    }
+    /*for (Edge e : CPMedges){ i dont think we need this because of the way were doing things
+      if (entries[e.start] == 0 && (!s.contains(e.start))) s.push(e.start);//compute amount of edges entering each node
+    }*/
+    s.push(1);//put the starting node in the stack since it should be the only one with no edges entering
 
     while (!s.isEmpty()){
       int currNode = s.pop();
-      //System.out.println("Current node: " + currNode);
 
       if (minDur < ES[currNode]) minDur = ES[currNode];
 
@@ -198,7 +200,7 @@ public class Graph2 {
         if(e.start == currNode){
           if (ES[e.to] < ES[currNode] + e.time){
             ES[e.to] = ES[currNode] + e.time;
-            prev[e.to] = currNode;
+            //prev[e.to] = currNode;
           }
           entries[e.to] = entries[e.to] - 1;
           if(entries[e.to] == 0 ){
@@ -213,24 +215,25 @@ public class Graph2 {
     return ES;
   }
 
+  /** @function that computes the latest finish for each node then prints if there is any free time on a node and the total free time
+   * */
   private void latestFlux(int ES[]){
-    int[] LF = new int[n + 1];
-    int[] exits = new int[n + 1]; // grau de saida de cada no
-    Set<Edge> CPMedgesReverse = new TreeSet<>();
+    int[] LF = new int[n + 1]; //array with n+1 positions containing the latest finish time for each i-node
+    int[] exits = new int[n + 1]; // amount of edges exiting each node
+    Set<Edge> CPMedgesReverse = new TreeSet<>(); // reverse the order of the edges to mimic a transposed graph
     Stack<Integer> s = new Stack<>();
     int totalWait = 0;
 
-    for(int i = 1; i < LF.length; i++){
-      LF[i] = ES[n];
-    }
+    for(int i = 1; i < LF.length; i++) LF[i] = ES[n]; //set default LF value as the total trip time
 
-    for (Edge e : CPMedges){
-      exits[e.start] = exits[e.start] + 1;//nao devia ser para e.start?
+
+    for (Edge e : CPMedges){ //compute amount of exits per node and build reverse edge list
+      exits[e.start] = exits[e.start] + 1;
       CPMedgesReverse.add(new Edge(e.to , e.start,e.time));
     }
 
     for (Edge e : CPMedgesReverse){
-      if (exits[e.start] == 0 && (!s.contains(e.start))) s.push(e.start);
+      if (exits[e.start] == 0 && (!s.contains(e.start))) s.push(e.start); // check for all nodes that have no edges exiting from them and put them in stack
       //System.out.println(e.start + "," + e.to);
     }
 
@@ -240,14 +243,11 @@ public class Graph2 {
       for (Edge e : CPMedgesReverse){
 
         if(e.start == currNode){
-          if (LF[e.to] > LF[currNode] - e.time){
-            LF[e.to] = LF[currNode] - e.time;
+          if (LF[e.to] > LF[currNode] - e.time) LF[e.to] = LF[currNode] - e.time; // compute latest finish for each node
 
-          }
           exits[e.to] = exits[e.to] - 1;
-          if(exits[e.to] == 0 ){
-            s.push(e.to);
-          }
+
+          if(exits[e.to] == 0 ) s.push(e.to);// check if current destiny can be added to compute stack
         }
       }
     }
@@ -256,13 +256,11 @@ public class Graph2 {
     for(int i = 1 ; i < LF.length; i++){
       if(ES[i]<LF[i] && ES[i]!=0){
         int currWait = LF[i] - ES[i];
-        System.out.println("Tempo de espera livre:" + currWait + " no nó:" + i);
+        System.out.println("Free time:" + currWait + " on node : " + i);
         totalWait+=currWait;
       }
-      //System.out.print(LF[i] + " ");
-
     }
-    System.out.println("Tempo total livre:" + totalWait);
+    System.out.println("\nTotal free time : " + totalWait);
   }
 
 }

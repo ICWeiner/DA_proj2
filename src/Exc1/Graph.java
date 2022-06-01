@@ -59,7 +59,7 @@ public class Graph {
                 }
             }
         }
-        System.out.println("Maximum path found, capacity = "  + caps[caps.length - 1 ]);
+        System.out.println("\nMaximum path found, capacity = "  + caps[caps.length - 1 ]);
         
         List<Integer> print = new LinkedList<>();
         for (int i = n; i > 1;){//add the father of each node to a list, in reverse order
@@ -111,7 +111,7 @@ public class Graph {
             }
         }
 
-        System.out.println("Shortest path found, distance = "  + nodes[n].distance);
+        System.out.println("\nShortest path found, distance = "  + nodes[n].distance);
     
         List<Integer> print = new LinkedList<>();
         for (int i = n; i > 1;){//Same as is written in maxPath()

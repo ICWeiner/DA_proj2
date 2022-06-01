@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4ace7f10-41ce-4ce8-9afe-cc41331129b1" name="Changes" comment="Finished 2.4(again) and 2.5?&#10;Cleanup needed">
+    <list default="true" id="4ace7f10-41ce-4ce8-9afe-cc41331129b1" name="Changes" comment="doxygen and codeclean #1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Exc1/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exc1/Graph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Exc2/Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exc2/Edge.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Exc2/Graph2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exc2/Graph2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Proj2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Proj2.java" afterDir="false" />
     </list>
@@ -100,7 +99,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654102981597</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="doxygen and codeclean #1">
+      <created>1654106886146</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1654106886146</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -122,6 +128,7 @@
     <MESSAGE value="created set that contains all edges used in the path" />
     <MESSAGE value="added test given by teacher that totally works no jankyness involved" />
     <MESSAGE value="Finished 2.4(again) and 2.5?&#10;Cleanup needed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished 2.4(again) and 2.5?&#10;Cleanup needed" />
+    <MESSAGE value="doxygen and codeclean #1" />
+    <option name="LAST_COMMIT_MESSAGE" value="doxygen and codeclean #1" />
   </component>
 </project>
