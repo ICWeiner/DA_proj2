@@ -18,28 +18,32 @@ public class Graph {
             nodes[i] = new Node();
     }
     
-    /**  */
+    /** adjacency of node a to node b by creating an edge while also adding the capacity and time of the path */
     public void addLink(int a, int b, int c, int d) {
         nodes[a].adj.add(new Edge(b, c, d));
     }
 
-    /** Dijkstra's algorithm slightly modified to find max flow path*/
-    public void maxPath(int s) {//this whole thing is sussy, im still not 100% how it works
-        for (int i=1; i<=n; i++) {//Set all node as unvisited
+    /** Dijkstra's algorithm slightly modified to find max flow path <br>
+     * first we initialize all nodes to unvisited <br>
+     * then create a TreeSet and add the first node also initialize caps array that
+     * contains capacity of each node and pai array that contains the father of the corresponding capacity of each node <br>
+     * then in the while we look for the lowest distance node and look for its edges <br>
+     * we look to see if capacity between the node and edge is smaller than the capacity already attributed to the node if it is
+     * we insert the new node in the q with that capacity and do it until the queue is finished. <br>
+     * when its finished we have found the biggest path. */
+    public void maxPath(int s) {
+        for (int i=1; i<=n; i++) {
             nodes[i].visited  = false;
         }
 
-        TreeSet<NodeQ> q = new TreeSet<>();// TreeSet used for dijkstra's algorithm
-        q.add(new NodeQ(0, s)); // Initial node
+        TreeSet<NodeQ> q = new TreeSet<>();
+        q.add(new NodeQ(0, s));
 
-
-        int[] caps = new int[n + 1]; // Array that contains the capacity of each node
-        int[] pai = new int[ n +1]; // Array that contains the father of the corresponding capacity of each node
-        //for (int i = 2 ; i < caps.length ; i++) caps[i] = 0; // i dont think we need this anymore
+        int[] caps = new int[n + 1];
+        int[] pai = new int[ n +1];
         caps[1] = Integer.MAX_VALUE;
 
         while (!q.isEmpty()) {
-            //Start with the lowest ditance node
             NodeQ nq = q.pollFirst();
             int  v = nq.node;
             nodes[v].visited = true;
@@ -54,10 +58,10 @@ public class Graph {
                 }
             }
         }
-        System.out.println("Caminho maximo encontrado, capacidade = "  + caps[caps.length - 1 ]);
+        System.out.println("Maximum path found, capacity = "  + caps[caps.length - 1 ]);
         
         List<Integer> print = new LinkedList<>();
-        for (int i = n; i > 1;){//imprimir caminho
+        for (int i = n; i > 1;){
             print.add(i);
             i = pai[i];
         }
@@ -68,8 +72,15 @@ public class Graph {
         System.out.println(print.get(print.size()-1));
     }
 
+    /** Dijkstra algorithm to find the shortest path form start to end. <br>
+     * first we initialize all nodes to unvisited and to max distance <br>
+     * then make the first node distance to 0 alse create a TreeSet and add the first node also initialize
+     * pai array that contains the father of the corresponding  node <br>
+     * then in the while we look for the lowest distance node and look for its edges <br>
+     * we look to see if the distance between the node and edge is smaller if it is
+     * we remove the node from the set then insert it with the new shorter distance and do it until the queue is finished. <br>
+     * when its finished we have found the shortest path. */
     public void dijkstra(int s) {
-        //Inicializar nos como nao visitados e com distancia infinita
         for (int i = 1; i <= n; i++) {
             nodes[i].distance = Integer.MAX_VALUE;
             nodes[i].visited = false;
@@ -77,15 +88,12 @@ public class Graph {
 
         int[] pai = new int[ n +1];
 
-        // Inicializar "fila" com no origem
         nodes[s].distance = 0;
         TreeSet<NodeQ> q = new TreeSet<>();
-        q.add(new NodeQ(0, s)); // Criar um par (dist=0, no=s)
-
-        // Ciclo principal do Dijkstra
+        q.add(new NodeQ(0, s));
+        
         while (!q.isEmpty()) {
 
-            // Retirar no com menor distancia (o "primeiro" do set, que e uma BST)
             NodeQ nq = q.pollFirst();
             int u = nq.node;
             nodes[u].visited = true;
@@ -94,9 +102,9 @@ public class Graph {
                 int v = e.to;
                 //int cost = e.capacity;
                 if (!nodes[v].visited && nodes[u].distance + 1 < nodes[v].distance) {
-                    q.remove(new NodeQ(nodes[v].distance, v)); // Apagar do set
+                    q.remove(new NodeQ(nodes[v].distance, v));
                     nodes[v].distance = nodes[u].distance + 1;
-                    q.add(new NodeQ(nodes[v].distance, v));    // Inserir com nova (e menor) distancia
+                    q.add(new NodeQ(nodes[v].distance, v));
                     pai[v] = u;
                 }
             }
@@ -115,70 +123,4 @@ public class Graph {
             System.out.print(print.get(a) + " -> ");
         System.out.println(print.get(print.size()-1));
     }
-
-    /*public void bfs(Node v) {
-        LinkedList<Node> q = new LinkedList<Node>();
-        for (int i = 1; i <= n; i++) nodes[i].visited = false;
-
-        q.add(v);
-        v.visited = true;
-        v.distance = 0;
-
-        while (q.size() > 0) {
-            Node u = q.removeFirst();
-            System.out.println(u + " [dist=" + u.distance + "]");
-            for (Exc1.Edge w : u.adj)
-                if (!nodes[w].visited) {
-                    q.add(w);
-                    nodes[w].visited = true;
-                    nodes[w].distance = nodes[u].distance + 1;
-                }
-            }
-        }
-
-    void findMaxPath(){
-        //LinkedList<Integer> path = new LinkedList<>();
-        int flow[][] = new int[n + 1][n +1];
-
-        for(int i = 0; i < n; i++)
-            flow[0][n] = Integer.MAX_VALUE;
-
-        for(int i = 1; i < nodes.length; i++){
-            for(Exc1.Edge edge : nodes[i].adj){
-                System.out.println(edge.capacity + " " + nodes[i].flow);
-                if(edge.capacity > nodes[i].flow)  flow[i][edge.to] = edge.capacity;
-                flow[i][edge.to] = nodes[i].flow;
-            }
-        }
-
-
-        for(int i = 1; i <= n; i++){
-            for(int j = 1; j <= n; j++){
-                System.out.print(" " + flow[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    void fordFulkerson(){
-
-    }
-
-    void floydWarshall(){
-        int dist[][] = new int[n + 1][n + 1];
-
-        for(int i = 1; i <=n; i++){
-            dist[i][i] = 0;
-        }
-
-        for(int i = 1; i <= nodes.length; i++){
-            for(Exc1.Edge edge: nodes[i - 1].adj){
-                //dist[]
-            }
-        }
-
-
-    }
-    */
-
 }

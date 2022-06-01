@@ -14,6 +14,7 @@ class NodeQ implements Comparable<NodeQ> {
         node = n;
     }
     
+    /** function to compare edges in order of capacity of nodes and then node number */
     @Override
     public int compareTo(NodeQ nq) {
         if (capacity < nq.capacity) return -1;
