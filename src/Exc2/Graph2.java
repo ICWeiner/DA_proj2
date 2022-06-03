@@ -1,7 +1,6 @@
 package Exc2;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static java.util.Collections.reverse;
 
@@ -79,7 +78,7 @@ public class Graph2 {
    * then traverse the node cur until reaching the s node adding to the capacity array from prev to cur
    * the new flow and subtracting the flow from cur to prev creating the residual flow <br>
    * when the new flow is zero the while breaks and all the paths are sent to the different functions to create the different solutions for various exercises*/
-  public void maxFlow( int t, int groupSize) {
+  public void maxFlow( int t, int c, int groupSize) {
     int s = 1;
     int flow = 0, i = 0;
     int[] parent = new int[n + 1];
@@ -90,15 +89,25 @@ public class Graph2 {
     while (true) {
       int new_flow = bfs(s, t, parent);
       if (new_flow == 0) {
-        if (flow < groupSize) {
-          System.out.println("Impossible to travel as a group");
-          break;
+  
+        switch (c) {
+          case 1 -> {
+            System.out.println("\nFlow for the group of " + groupSize + ":");
+            groupPath(groupSize);
+          }
+          case 2 -> {
+            System.out.println("How many people showed up now ?");
+            Scanner reader = new Scanner(System.in);
+            int addOn = reader.nextInt();
+            System.out.println("\nFlow for the group of " + groupSize + addOn + ":");
+            groupPath(groupSize + addOn);
+          }
+          case 3 -> {
+            System.out.println("\nFlow for the maximum group: " + flow);
+            maxPath();
+          }
+          default -> timeFLux(c);
         }
-        System.out.println("\nFlow for the maximum group: " + flow);
-        maxPath();
-        System.out.println("\nFlow for the group of " + groupSize + ":");
-        groupPath(groupSize);
-        timeFLux();
         break;
       }
       
@@ -167,10 +176,12 @@ public class Graph2 {
 
   /** @function calls other functions that use CPM to compute the earliest finish time of the trip and free time on any node
    * */
-  private void timeFLux(){
+  private void timeFLux(int c){
     int[] earliestStart = EarliestFlux();
-    System.out.println("\nEarliest finish time is:" + earliestStart[n] );
-    latestFlux(earliestStart);
+    if(c==4)
+      System.out.println("\nEarliest finish time is:" + earliestStart[n] );
+    else
+      latestFlux(earliestStart);
   }
 
   /** @function that computes the earliest start for each node
@@ -217,7 +228,7 @@ public class Graph2 {
 
   /** @function that computes the latest finish for each node then prints if there is any free time on a node and the total free time
    * */
-  private void latestFlux(int ES[]){
+  private void latestFlux(int[] ES){
     int[] LF = new int[n + 1]; //array with n+1 positions containing the latest finish time for each i-node
     int[] exits = new int[n + 1]; // amount of edges exiting each node
     Set<Edge> CPMedgesReverse = new TreeSet<>(); // reverse the order of the edges to mimic a transposed graph

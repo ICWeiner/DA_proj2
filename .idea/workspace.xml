@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ace7f10-41ce-4ce8-9afe-cc41331129b1" name="Changes" comment="doxygen and codeclean #1">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_22,_23_16_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_22__23_16__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Exc1/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exc1/Graph.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Exc2/Graph2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exc2/Graph2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Proj2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Proj2.java" afterDir="false" />
     </list>
